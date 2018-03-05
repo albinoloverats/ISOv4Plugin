@@ -65,7 +65,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             //Varieties
             if (DataModel.Catalog.Products != null)
             {
-                IEnumerable<Product> varietyProducts = DataModel.Catalog.Products.Where(p => p.ProductType == ProductTypeEnum.Variety);
+                IEnumerable<Product> varietyProducts = DataModel.Catalog.Products.Where(p => p.ProductType == ProductTypeEnum.Variety && p is CropVarietyProduct);
                 if (varietyProducts.Any())
                 {
                     IEnumerable<CropVarietyProduct> cropVarieties = varietyProducts.Cast<CropVarietyProduct>().Where(v => v.CropId == adaptCropType.Id.ReferenceId);

@@ -37,6 +37,10 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
         {
             var ddi = _representationMapper.Map(currentMeter.Representation);
             var creator = _enumeratedMeterFactory.GetMeterCreator(ddi.GetValueOrDefault());
+            if (creator == null)
+            {
+                return 0;
+            }
             //The intent of the meters parameter below is to send in those meters that reconcile to a single DLV.
             //Since we are not exporting condensed DDIS at this time, just passing in the collection.
             return creator.GetMetersValue(meters, spatialRecord); 

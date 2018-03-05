@@ -221,7 +221,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             }
 
             //Comments
-            if (loggedData.Notes.Any())
+            if (loggedData.Notes != null && loggedData.Notes.Any())
             {
                 CommentAllocationMapper canMapper = new CommentAllocationMapper(TaskDataMapper);
                 task.CommentAllocations = canMapper.ExportCommentAllocations(loggedData.Notes).ToList();

@@ -213,6 +213,10 @@ namespace AgGateway.ADAPT.ISOv4Plugin.ExtensionMethods
         /// <returns></returns>
         public static double AsConvertedDouble(this NumericRepresentationValue value, string targetUnitCode)
         {
+            if (value == null)
+            {
+                return 0.0;
+            }
             if (value.Value.UnitOfMeasure == null)
             {
                 return value.Value.Value; //Return the unconverted value

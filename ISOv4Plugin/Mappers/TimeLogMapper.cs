@@ -123,7 +123,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
                         dlv.ProcessDataDDI = mappedDDI.Value.AsHexDDI();
                     }
                 }
-                else if (workingData.Representation.CodeSource == ApplicationDataModel.Representations.RepresentationCodeSourceEnum.ISO11783_DDI)
+                else if (workingData.Representation != null && workingData.Representation.CodeSource == ApplicationDataModel.Representations.RepresentationCodeSourceEnum.ISO11783_DDI)
                 {
                     dlv.ProcessDataDDI = workingData.Representation.Code;
                 }
