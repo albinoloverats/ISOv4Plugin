@@ -58,14 +58,17 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
                     foreach (ProductComponent component in adaptMixProduct.ProductComponents)
                     {
                         Ingredient ingredient = DataModel.Catalog.Ingredients.FirstOrDefault(i => i.Id.ReferenceId == component.IngredientId);
-                        ISOProduct componentProduct = isoProducts.FirstOrDefault(p => p.ProductDesignator == ingredient.Description); //Matches on name; assumes all ingredients are also products
-                        if (componentProduct != null)
+                        if (ingredient != null)
                         {
-                            //Create PRNs if we can match to pre-existing products
-                            ISOProductRelation relation = new ISOProductRelation();
-                            relation.ProductIdRef = componentProduct.ProductId;
-                            relation.QuantityValue = component.Quantity.AsIntViaMappedDDI(RepresentationMapper); 
-                            isoMixProduct.ProductRelations.Add(relation);
+                            ISOProduct componentProduct = isoProducts.FirstOrDefault(p => p.ProductDesignator == ingredient.Description); //Matches on name; assumes all ingredients are also products
+                            if (componentProduct != null)
+                            {
+                                //Create PRNs if we can match to pre-existing products
+                                ISOProductRelation relation = new ISOProductRelation();
+                                relation.ProductIdRef = componentProduct.ProductId;
+                                relation.QuantityValue = component.Quantity.AsIntViaMappedDDI(RepresentationMapper);
+                                isoMixProduct.ProductRelations.Add(relation);
+                            }
                         }
                     }
 
@@ -148,7 +151,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             return isoProduct;
         }
 
-        #endregion Export 
+        #endregion Export
 
         #region Import
 
@@ -191,7 +194,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             //ID
             if (!ImportIDs(product.Id, isoProduct.ProductId))
             {
-                //Replace the CVT id with the PDT id in the mapping            
+                //Replace the CVT id with the PDT id in the mapping
                 TaskDataMapper.InstanceIDMap.ReplaceISOID(product.Id.ReferenceId, isoProduct.ProductId);
             }
 
@@ -219,7 +222,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
                         ingredient.Description = isoComponent.ProductDesignator;
                         DataModel.Catalog.Ingredients.Add(ingredient);
                     }
-                    
+
                     //Create a component for this ingredient
                     ProductComponent component = new ProductComponent() { IngredientId = ingredient.Id.ReferenceId };
                     if (!string.IsNullOrEmpty(isoComponent.QuantityDDI))
