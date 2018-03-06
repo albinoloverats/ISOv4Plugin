@@ -136,7 +136,8 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             ISOTask task = null;
 
             //Try to map to a pre-existing Work Item task where appropriate
-            if (loggedData.OperationData.All(o => o.PrescriptionId.HasValue) &&
+            if (loggedData.OperationData != null &&
+                loggedData.OperationData.All(o => o.PrescriptionId.HasValue) &&
                 loggedData.OperationData.Select(o => o.PrescriptionId.Value).Distinct().Count() == 1)
             {
                 int rxID = loggedData.OperationData.First().PrescriptionId.Value;
@@ -190,7 +191,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             //Status
             task.TaskStatus = ISOEnumerations.ISOTaskStatus.Completed;
 
-            if (loggedData.OperationData.Any())
+            if (loggedData.OperationData != null && loggedData.OperationData.Any())
             {
                 //Time Logs
                 task.TimeLogs = TimeLogMapper.ExportTimeLogs(loggedData.OperationData, TaskDataPath).ToList();

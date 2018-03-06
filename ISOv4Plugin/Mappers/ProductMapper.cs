@@ -94,7 +94,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
             if (!ExportIDs(adaptProduct.Id, productID))
             {
                 string preExistingID = TaskDataMapper.InstanceIDMap.GetISOID(adaptProduct.Id.ReferenceId);
-                if (preExistingID.StartsWith("CVT"))
+                if (preExistingID != null && preExistingID.StartsWith("CVT"))
                 {
                     ISOCropVariety cvt = ISOTaskData.ChildElements.OfType<ISOCropType>().SelectMany(c => c.CropVarieties).FirstOrDefault(v => v.CropVarietyId == preExistingID);
                     if (cvt != null)
