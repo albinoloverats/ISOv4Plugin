@@ -46,7 +46,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.Mappers
 
                         int depth = hierarchy.Depth;
                         int order = hierarchy.Order;
-                        if (config.DeviceElementId == adaptDeviceElement.ParentDeviceId)
+                        if (config.DeviceElementId == adaptDeviceElement.ParentDeviceId && hierarchy.Parent != null)
                         {
                             //The configuration references the parent ISO element
                             depth = hierarchy.Parent.Depth;

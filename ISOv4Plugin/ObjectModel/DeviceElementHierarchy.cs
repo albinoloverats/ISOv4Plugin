@@ -162,7 +162,7 @@ namespace AgGateway.ADAPT.ISOv4Plugin.ObjectModel
 
         public DeviceElementHierarchy FromDeviceElementID(string deviceElementID)
         {
-            if (DeviceElement.DeviceElementId == deviceElementID)
+            if (DeviceElement != null && DeviceElement.DeviceElementId == deviceElementID)
             {
                 return this;
             }
